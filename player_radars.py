@@ -58,9 +58,34 @@ all_data = pd.merge(all_data, defensive_df, on="Player")
 # fill all columns with na with 0
 all_data = all_data.fillna(0)
 
+# need to fix something on the repetitive joining #######
+all_data
+
+# min max the data so every metric is measured out of 100% vs league best
+metrics = all_data.iloc[:, 1:]
+scaler = MinMaxScaler()
+# transform to a dataframe 
+data_minmax = pd.DataFrame(scaler.fit_transform(metrics), columns=metrics.columns)
+data_minmax
+
+# merge the data back together 
+players = all_data['Player']
+
+df = pd.merge(players, data_minmax, left_index=True, right_index=True)
+df
+
+
+
+# create the next steps where selection by the inputs decides what metrics to compare
+
+
+
+
+
 
 #### producing page ####
 st.header("Bundesliga 2023-24: Player Comparison Radars")
 
-all_data.head()
+
+
 
